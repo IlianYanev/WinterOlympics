@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Winter Games Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="navbar">
+    <div style="font-size: 1.2em; font-weight: bold;">❄️ WinterOlympics</div>
+    <div>
+            <span th:if="${#authorization.expression('isAuthenticated()')}">
+                Welcome, <strong th:text="${#authentication.name}"></strong>!
+            </span>
+        <span th:if="${#authorization.expression('!isAuthenticated()')}">
+                <a th:href="@{/login}">Login</a>
+                <a th:href="@{/register}">Register</a>
+            </span>
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin/dashboard}">Admin Dashboard</a>
+        <a th:if="${#authorization.expression('hasRole(''ATHLETE'')')}" th:href="@{/athlete/profile}">My Profile</a>
+        <form th:if="${#authorization.expression('isAuthenticated()')}" th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
+            <button type="submit" style="background: none; color: #ffcc00; border: none; padding: 0; font-size: 1em; cursor: pointer; box-shadow: none;">Logout</button>
+        </form>
+    </div>
+</div>
+
+<div class="hero">
+    <h1>Winter Games Management System</h1>
+    <p>Welcome to the official portal for the upcoming Winter Olympics. Track live results, manage athletic profiles, and explore the events for Ski Slalom and Biathlon.</p>
+    <a th:href="@{/public/competitions}" class="btn-primary">View Competitions & Results</a>
+</div>
+<br><br><br>
+<div class="container">
+    <div class="info-grid">
+        <div class="card">
+            <h3>⛷️ Ski Slalom</h3>
+            <p>Experience the thrill of speed and precision. Track the top qualifiers from the first run and follow the final standings in real-time.</p>
+        </div>
+        <div class="card">
+            <h3>🎿 Biathlon</h3>
+            <p>A true test of endurance and focus. Monitor skiing times and penalty tracking for every missed shot on the range.</p>
+        </div>
+        <div class="card">
+            <h3>🏅 Medal Standings</h3>
+            <p>Stay updated with the latest achievements. See which countries and athletes are dominating the winter events this season.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

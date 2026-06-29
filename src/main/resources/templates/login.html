@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Winter Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <div style="font-size: 1.2em; font-weight: bold;"><a th:href="@{/}" style="color: white; margin: 0;">❄️ WinterOlympics</a></div>
+</div>
+
+<div class="container" style="display: flex; justify-content: center;">
+    <form class="auth-form" th:action="@{/login}" method="post">
+        <h2 style="text-align: center; color: #003366; margin-top: 0;">System Access</h2>
+
+        <div th:if="${param.error}" class="alert alert-error">
+            Invalid username or password.
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
+            You have been logged out successfully.
+        </div>
+        <div th:if="${param.registered}" class="alert alert-success">
+            Registration successful! Please log in.
+        </div>
+
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autofocus />
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
+        </div>
+        <button type="submit">Log In</button>
+        <div style="text-align: center; margin-top: 15px;">
+            <a th:href="@{/register}" style="color: #666; font-size: 0.9em; text-decoration: none;">Don't have an account? Register here</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

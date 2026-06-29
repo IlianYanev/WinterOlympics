@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Winter Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <div style="font-size: 1.2em; font-weight: bold;"><a th:href="@{/}" style="color: white; margin: 0;">❄️ WinterOlympics</a></div>
+</div>
+
+<div class="container" style="display: flex; justify-content: center;">
+    <form class="auth-form" th:action="@{/register}" th:object="${athleteDto}" method="post" style="max-width: 500px;">
+        <h2 style="text-align: center; color: #003366; margin-top: 0;">Athlete Registration</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+            <div style="grid-column: span 2;">
+                <label for="username">Username</label>
+                <input type="text" id="username" th:field="*{username}" required />
+            </div>
+            <div style="grid-column: span 2;">
+                <label for="password">Password</label>
+                <input type="password" id="password" th:field="*{password}" required />
+            </div>
+            <div style="grid-column: span 2;">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" th:field="*{name}" required />
+            </div>
+            <div>
+                <label for="country">Country</label>
+                <input type="text" id="country" th:field="*{country}" required />
+            </div>
+            <div>
+                <label for="gender">Gender</label>
+                <select id="gender" th:field="*{gender}" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px;" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div style="grid-column: span 2;">
+                <label for="birthDate">Date of Birth</label>
+                <input type="date" id="birthDate" th:field="*{birthDate}" required />
+            </div>
+        </div>
+
+        <button type="submit" style="margin-top: 15px;">Create Account</button>
+        <div style="text-align: center; margin-top: 10px;">
+            <a th:href="@{/login}" style="color: #666; font-size: 0.9em; text-decoration: none;">Already have an account? Log in</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
