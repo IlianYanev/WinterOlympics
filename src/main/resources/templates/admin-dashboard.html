@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Winter Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <div style="font-size: 1.2em; font-weight: bold;"><a th:href="@{/}" style="color: white; margin: 0;">❄️ WinterOlympics</a></div>
+    <div>
+        <a th:href="@{/}">Home</a>
+        <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
+            <button type="submit" style="background: none; color: #ffcc00; border: none; padding: 0; font-size: 1em; cursor: pointer; box-shadow: none;">Logout</button>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    <h2 style="color: #003366; border-bottom: 2px solid #ffcc00; padding-bottom: 10px;">Admin Dashboard</h2>
+
+    <div th:if="${param.success}" class="alert alert-success" style="width: 100%; max-width: 100%; box-sizing: border-box;">
+        Competition created successfully!
+    </div>
+
+    <div class="info-grid" style="margin-top: 20px;">
+        <div class="card">
+            <h3>➕ Add Competition</h3>
+            <p>Create a new Ski Slalom or Biathlon event.</p>
+            <a th:href="@{/admin/competitions/new}" class="btn-primary" style="padding: 10px 20px; font-size: 1em;">Create</a>
+        </div>
+        <div class="card">
+            <h3>📊 Manage Results</h3>
+            <p>Enter or update athlete times and scores.</p>
+            <a th:href="@{/admin/results}" class="btn-primary" style="padding: 10px 20px; font-size: 1em;">Manage</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

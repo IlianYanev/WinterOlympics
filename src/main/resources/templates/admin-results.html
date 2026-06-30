@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Results - Winter Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <div style="font-size: 1.2em; font-weight: bold;"><a th:href="@{/}" style="color: white; margin: 0;">❄️ WinterOlympics</a></div>
+    <div>
+        <a th:href="@{/admin/dashboard}">Back to Dashboard</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2 style="color: #003366; border-bottom: 2px solid #ffcc00; padding-bottom: 10px;">Select Competition to Manage Results</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comp : ${competitions}">
+            <td th:text="${comp.id}"></td>
+            <td th:text="${comp.name}"></td>
+            <td th:text="${comp.type}"></td>
+            <td>
+                <a th:href="@{/admin/results/add(compId=${comp.id})}" class="btn-primary" style="padding: 5px 10px; font-size: 0.9em;">Add Result</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(competitions)}">
+            <td colspan="4" style="text-align: center; color: #7f8c8d; padding: 30px;">No competitions available.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
