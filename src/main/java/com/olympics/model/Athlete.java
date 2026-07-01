@@ -26,6 +26,9 @@ public class Athlete {
     @Column(nullable = false)
     private LocalDate birthDate;
 
+    @Column
+    private String username;
+
     public Athlete() {
     }
 
@@ -67,5 +70,13 @@ public class Athlete {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

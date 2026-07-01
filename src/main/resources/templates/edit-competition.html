@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Competition - Winter Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <div style="font-size: 1.2em; font-weight: bold;"><a th:href="@{/}" style="color: white; margin: 0;">❄️ WinterOlympics</a></div>
+    <div>
+        <a th:href="@{/admin/results}">Back to Manage Results</a>
+    </div>
+</div>
+
+<div class="container" style="display: flex; justify-content: center;">
+    <form class="auth-form" th:action="@{/admin/competitions/edit}" th:object="${competition}" method="post" style="max-width: 500px;">
+        <h2 style="text-align: center; color: #003366; margin-top: 0;">Edit Competition</h2>
+
+        <input type="hidden" th:field="*{id}" />
+
+        <div>
+            <label for="name">Competition Name</label>
+            <input type="text" id="name" th:field="*{name}" required />
+        </div>
+        <div>
+            <label for="type">Sport Type (Cannot be changed)</label>
+            <input type="text" id="type" th:field="*{type}" readonly style="background-color: #f8f9fa; color: #7f8c8d; border: 1px solid #ccc; width: 100%; padding: 12px; border-radius: 6px; box-sizing: border-box;" />
+        </div>
+        <div>
+            <label for="genderCategory">Gender Category</label>
+            <select id="genderCategory" th:field="*{genderCategory}" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px;" required>
+                <option value="Men">Men</option>
+                <option value="Women">Women</option>
+                <option value="Mixed">Mixed</option>
+            </select>
+        </div>
+        <div>
+            <label for="minAge">Minimum Age</label>
+            <input type="number" id="minAge" th:field="*{minAge}" required min="1" />
+        </div>
+
+        <button type="submit" style="margin-top: 15px; background-color: #f39c12;">Update Competition</button>
+    </form>
+</div>
+</body>
+</html>

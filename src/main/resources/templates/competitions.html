@@ -19,23 +19,23 @@
     <table>
         <thead>
         <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Type</th>
             <th>Category</th>
-            <th>Min Age</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="comp : ${competitions}">
-            <td th:text="${comp.id}"></td>
-            <td th:text="${comp.name}"></td>
+            <td th:text="${comp.name}" style="font-weight: bold;"></td>
             <td th:text="${comp.type}"></td>
             <td th:text="${comp.genderCategory}"></td>
-            <td th:text="${comp.minAge}"></td>
+            <td>
+                <a th:href="@{'/public/competitions/' + ${comp.id}}" class="btn-primary" style="padding: 5px 15px; font-size: 0.9em; background-color: #003366; color: white;">View Leaderboard</a>
+            </td>
         </tr>
         <tr th:if="${#lists.isEmpty(competitions)}">
-            <td colspan="5" style="text-align: center; color: #7f8c8d; padding: 30px;">No competitions registered yet.</td>
+            <td colspan="4" style="text-align: center; color: #7f8c8d; padding: 30px;">No competitions registered yet.</td>
         </tr>
         </tbody>
     </table>

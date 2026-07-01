@@ -16,13 +16,20 @@
 <div class="container">
     <h2 style="color: #003366; border-bottom: 2px solid #ffcc00; padding-bottom: 10px;">Select Competition to Manage Results</h2>
 
+    <div th:if="${param.deleted}" class="alert alert-success" style="width: 100%; max-width: 100%; box-sizing: border-box;">
+        Competition deleted successfully!
+    </div>
+    <div th:if="${param.updated}" class="alert alert-success" style="width: 100%; max-width: 100%; box-sizing: border-box;">
+        Competition updated successfully!
+    </div>
+
     <table>
         <thead>
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Type</th>
-            <th>Action</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -30,8 +37,13 @@
             <td th:text="${comp.id}"></td>
             <td th:text="${comp.name}"></td>
             <td th:text="${comp.type}"></td>
-            <td>
+            <td style="display: flex; gap: 10px; align-items: center;">
                 <a th:href="@{/admin/results/add(compId=${comp.id})}" class="btn-primary" style="padding: 5px 10px; font-size: 0.9em;">Add Result</a>
+                <a th:href="@{/admin/competitions/edit(id=${comp.id})}" class="btn-primary" style="padding: 5px 10px; font-size: 0.9em; background-color: #f39c12; color: white;">Edit</a>
+                <form th:action="@{/admin/competitions/delete}" method="post" onsubmit="return confirm('Are you sure you want to delete this competition and all its results?');" style="margin: 0; padding: 0; box-shadow: none; width: auto; background: none;">
+                    <input type="hidden" name="id" th:value="${comp.id}" />
+                    <button type="submit" style="background-color: #e74c3c; padding: 5px 10px; font-size: 0.9em;">Delete</button>
+                </form>
             </td>
         </tr>
         <tr th:if="${#lists.isEmpty(competitions)}">

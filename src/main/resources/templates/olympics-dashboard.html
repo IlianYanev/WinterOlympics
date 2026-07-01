@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Olympics Dashboard - Winter Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <div style="font-size: 1.2em; font-weight: bold;"><a th:href="@{/}" style="color: white; margin: 0;">❄️ WinterOlympics</a></div>
+    <div>
+        <a th:href="@{/}">Home</a>
+        <a th:href="@{/public/competitions}">Competitions</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2 style="color: #003366; border-bottom: 2px solid #ffcc00; padding-bottom: 10px;">Olympic Games Statistics</h2>
+
+    <div class="info-grid" style="margin-top: 20px; margin-bottom: 30px;">
+        <div class="card" style="text-align: center;">
+            <h3>📊 Average Age</h3>
+            <p style="font-size: 2em; font-weight: bold; color: #003366; margin: 10px 0;" th:text="${avgAge} + ' years'"></p>
+            <p>Of all active participants</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <h3>👶 Youngest Medalist</h3>
+            <p th:if="${youngestMedalist != null}" style="font-size: 1.2em; font-weight: bold; color: #27ae60; margin: 10px 0;" th:text="${youngestMedalist.name} + ' (' + ${youngestAge} + ')'"></p>
+            <p th:if="${youngestMedalist != null}" th:text="${youngestMedalist.country}"></p>
+            <p th:if="${youngestMedalist == null}" style="color: #7f8c8d; margin: 10px 0;">No medalists yet</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <h3>🧓 Oldest Medalist</h3>
+            <p th:if="${oldestMedalist != null}" style="font-size: 1.2em; font-weight: bold; color: #27ae60; margin: 10px 0;" th:text="${oldestMedalist.name} + ' (' + ${oldestAge} + ')'"></p>
+            <p th:if="${oldestMedalist != null}" th:text="${oldestMedalist.country}"></p>
+            <p th:if="${oldestMedalist == null}" style="color: #7f8c8d; margin: 10px 0;">No medalists yet</p>
+        </div>
+    </div>
+
+    <h3 style="color: #003366; margin-top: 20px;">🥇 Medal Tally by Country</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Country</th>
+            <th style="color: #f1c40f;">Gold 🥇</th>
+            <th style="color: #95a5a6;">Silver 🥈</th>
+            <th style="color: #d35400;">Bronze 🥉</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row, stat : ${medalTally}">
+            <td th:text="${stat.count}" style="font-weight: bold; color: #003366;"></td>
+            <td th:text="${row.country}" style="font-weight: bold;"></td>
+            <td th:text="${row.gold}"></td>
+            <td th:text="${row.silver}"></td>
+            <td th:text="${row.bronze}"></td>
+            <td th:text="${row.total}" style="font-weight: bold; color: #2c3e50;"></td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(medalTally)}">
+            <td colspan="6" style="text-align: center; color: #7f8c8d; padding: 30px;">No medals awarded yet.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

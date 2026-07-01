@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface SkiSlalomResultRepository extends JpaRepository<SkiSlalomResult, Long> {
-    List<SkiSlalomResult> findByCompetitionIdOrderByTotalTimeAsc(Long competitionId);
+    List<SkiSlalomResult> findByCompetitionId(Long competitionId);
+    List<SkiSlalomResult> findByAthleteId(Long athleteId);
+    List<SkiSlalomResult> findByCompetitionIdOrderByFirstRunTimeAsc(Long competitionId);
 }

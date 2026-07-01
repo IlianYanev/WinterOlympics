@@ -8,20 +8,24 @@
 <body>
 
 <div class="navbar">
-    <div style="font-size: 1.2em; font-weight: bold;">❄️ WinterOlympics</div>
+    <div style="font-size: 1.2em; font-weight: bold;"><a th:href="@{/}" style="color: white; margin: 0;">❄️ WinterOlympics</a></div>
     <div>
-            <span th:if="${#authorization.expression('isAuthenticated()')}">
-                Welcome, <strong th:text="${#authentication.name}"></strong>!
-            </span>
-        <span th:if="${#authorization.expression('!isAuthenticated()')}">
-                <a th:href="@{/login}">Login</a>
-                <a th:href="@{/register}">Register</a>
-            </span>
-        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin/dashboard}">Admin Dashboard</a>
-        <a th:if="${#authorization.expression('hasRole(''ATHLETE'')')}" th:href="@{/athlete/profile}">My Profile</a>
-        <form th:if="${#authorization.expression('isAuthenticated()')}" th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
-            <button type="submit" style="background: none; color: #ffcc00; border: none; padding: 0; font-size: 1em; cursor: pointer; box-shadow: none;">Logout</button>
-        </form>
+        <a th:href="@{/public/competitions}">Competitions</a>
+        <a th:href="@{/public/olympics}">Olympics Stats</a>
+
+        <th:block th:if="${#authentication.name == 'anonymousUser'}">
+            <a th:href="@{/login}">Login</a>
+            <a th:href="@{/register}">Register</a>
+        </th:block>
+
+        <th:block th:if="${#authentication.name != 'anonymousUser'}">
+            <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/admin/dashboard}">Admin Dashboard</a>
+            <a th:if="${#authorization.expression('hasRole(''ATHLETE'')')}" th:href="@{/athlete/profile}">My Profile</a>
+
+            <form th:action="@{/logout}" method="post" style="display: inline; margin-left: 20px;">
+                <button type="submit" style="background: none; color: #ffcc00; border: none; padding: 0; font-size: 1em; cursor: pointer; box-shadow: none;">Logout</button>
+            </form>
+        </th:block>
     </div>
 </div>
 

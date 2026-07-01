@@ -9,7 +9,6 @@ import com.olympics.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -39,6 +38,7 @@ public class AthleteService {
         athlete.setCountry(dto.getCountry());
         athlete.setGender(dto.getGender());
         athlete.setBirthDate(LocalDate.parse(dto.getBirthDate()));
+        athlete.setUsername(dto.getUsername());
         athleteRepository.save(athlete);
     }
 }

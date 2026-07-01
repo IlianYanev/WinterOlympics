@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Leaderboard - Winter Games</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="navbar">
+    <div style="font-size: 1.2em; font-weight: bold;"><a th:href="@{/}" style="color: white; margin: 0;">❄️ WinterOlympics</a></div>
+    <div>
+        <a th:href="@{/public/competitions}">Back to Competitions</a>
+    </div>
+</div>
+
+<div class="container">
+    <h2 style="color: #003366; margin-bottom: 0;">Final Leaderboard</h2>
+    <h3 style="color: #666; margin-top: 5px; border-bottom: 2px solid #ffcc00; padding-bottom: 10px;" th:text="${competition.name + ' (' + competition.genderCategory + ')'}"></h3>
+
+    <table th:if="${competition.type == 'Ski Slalom'}">
+        <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Athlete</th>
+            <th>Country</th>
+            <th>Run 1 (s)</th>
+            <th>Run 2 (s)</th>
+            <th>Total Time</th>
+            <th th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Admin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="result, iterStat : ${results}">
+            <td th:text="${iterStat.count}" style="font-weight: bold; font-size: 1.2em; color: #003366;"></td>
+            <td th:text="${result.athlete.name}"></td>
+            <td th:text="${result.athlete.country}"></td>
+            <td th:text="${result.firstRunTime != null ? result.firstRunTime : '-'}"></td>
+
+            <th:block th:if="${result.totalTime != null}">
+                <td th:text="${result.secondRunTime}"></td>
+                <td th:text="${result.totalTime} + ' s'" style="font-weight: bold; color: #27ae60;"></td>
+            </th:block>
+
+            <th:block th:if="${result.totalTime == null and result.isFinished}">
+                <td colspan="2" style="text-align: center; color: #f39c12; font-weight: bold; font-style: italic;">Did not qualify</td>
+            </th:block>
+
+            <th:block th:if="${!result.isFinished}">
+                <td colspan="2" style="text-align: center; color: #e74c3c; font-weight: bold;">DNF</td>
+            </th:block>
+
+            <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}" style="display: flex; gap: 5px;">
+                <a th:href="@{/admin/results/edit(resultId=${result.id}, type='slalom')}" class="btn-primary" style="padding: 5px 10px; font-size: 0.8em; background-color: #3498db; color: white; text-decoration: none; border-radius: 4px;">Edit</a>
+                <form th:action="@{/admin/results/slalom/delete}" method="post" style="margin: 0; padding: 0; box-shadow: none; width: auto; background: none;">
+                    <input type="hidden" name="resultId" th:value="${result.id}" />
+                    <input type="hidden" name="compId" th:value="${competition.id}" />
+                    <button type="submit" style="background-color: #e74c3c; padding: 5px 10px; font-size: 0.8em; border-radius: 4px; border: none; color: white; cursor: pointer;" onclick="return confirm('Delete this result?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(results)}">
+            <td colspan="7" style="text-align: center; color: #7f8c8d; padding: 30px;">No final results recorded yet.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table th:if="${competition.type == 'Biathlon'}">
+        <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Athlete</th>
+            <th>Country</th>
+            <th>Skiing Time (min)</th>
+            <th>Misses</th>
+            <th>Total Time (incl. penalties)</th>
+            <th th:if="${#authorization.expression('hasRole(''ADMIN'')')}">Admin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="result, iterStat : ${results}">
+            <td th:text="${iterStat.count}" style="font-weight: bold; font-size: 1.2em; color: #003366;"></td>
+            <td th:text="${result.athlete.name}"></td>
+            <td th:text="${result.athlete.country}"></td>
+            <td th:text="${result.skiingTime}"></td>
+            <td th:text="${result.misses} + ' (' + ${result.penaltyTime} + ' min)'" style="color: #e74c3c;"></td>
+            <td th:text="${result.totalTime} + ' min'" style="font-weight: bold; color: #27ae60;"></td>
+            <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}" style="display: flex; gap: 5px;">
+                <a th:href="@{/admin/results/edit(resultId=${result.id}, type='biathlon')}" class="btn-primary" style="padding: 5px 10px; font-size: 0.8em; background-color: #3498db; color: white; text-decoration: none; border-radius: 4px;">Edit</a>
+                <form th:action="@{/admin/results/biathlon/delete}" method="post" style="margin: 0; padding: 0; box-shadow: none; width: auto; background: none;">
+                    <input type="hidden" name="resultId" th:value="${result.id}" />
+                    <input type="hidden" name="compId" th:value="${competition.id}" />
+                    <button type="submit" style="background-color: #e74c3c; padding: 5px 10px; font-size: 0.8em; border-radius: 4px; border: none; color: white; cursor: pointer;" onclick="return confirm('Delete this result?');">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(results)}">
+            <td colspan="7" style="text-align: center; color: #7f8c8d; padding: 30px;">No results recorded yet for this event.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
