@@ -44,7 +44,7 @@ This system is a comprehensive platform designed for managing Winter Olympic Gam
 
 ## 🗄 Database Schema (ER Diagram)
 
-<img width="1439" height="2060" alt="WinterOlympicsER" src="https://github.com/user-attachments/assets/cf940f8a-a92b-4b3a-9c22-20a114115a38" />
+<img width="720" height="1030" alt="WinterOlympicsER" src="https://github.com/user-attachments/assets/cf940f8a-a92b-4b3a-9c22-20a114115a38" />
 
 
 ## ⚙️ Getting Started
