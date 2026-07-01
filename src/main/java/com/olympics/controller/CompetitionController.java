@@ -44,20 +44,19 @@ public class CompetitionController {
         if ("Ski Slalom".equals(competition.getType())) {
             List<SkiSlalomResult> slalomResults = slalomRepository.findByCompetitionId(id);
 
-            // Персонализирано сортиране в Java
+
             slalomResults.sort((a, b) -> {
-                // 1. И двамата са завършили напълно -> Сравняваме общото време
+
                 if (a.getTotalTime() != null && b.getTotalTime() != null) {
                     return a.getTotalTime().compareTo(b.getTotalTime());
                 }
                 if (a.getTotalTime() != null) return -1;
                 if (b.getTotalTime() != null) return 1;
 
-                // 2. Някой е DNF (отпаднал) -> Отива най-отдолу
                 if (!a.isFinished() && b.isFinished()) return 1;
                 if (a.isFinished() && !b.isFinished()) return -1;
 
-                // 3. И двамата са DNQ (имат само първи манш) -> Сравняваме времето от първи манш
+                // ако двама имат DNQ сравняваме 1ви манш
                 if (a.getFirstRunTime() != null && b.getFirstRunTime() != null) {
                     return a.getFirstRunTime().compareTo(b.getFirstRunTime());
                 }
